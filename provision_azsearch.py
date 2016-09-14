@@ -1,4 +1,4 @@
-"""Configure an azure search instance 
+"""Configure an azure search instance
 
 -------------------------------------
 How to use
@@ -35,11 +35,11 @@ def get_search_resource(url, admin_key, apiversion, resource):
     headers = { 'api-key': admin_key }
     response = requests.get(url + '/' + resource, headers=headers, params=params)
     response.raise_for_status()
-    result = response.json()['value'];
+    result = response.json()['value']
     response.close()
     return result
 
-def delete_search_resource(url, admin_key, apiversion, config):
+def delete_search_resource(url, admin_key, apiversion, resource):
     return requestsaction_search_resource(requests.delete, url, admin_key, apiversion, resource, None)
 
 def post_search_resource(url, admin_key, apiversion, resource, data):
@@ -64,15 +64,14 @@ def requestsaction_search_resource(requests_action, url, admin_key, apiversion, 
     finally:
         response.close()
 
-if __name__ == "__main__":
-
+def main():
     INDEXES = "indexes"
     INDEXERS = "indexers"
     DATASOURCES = "datasources"
     ALL_CONFIG_TYPES = [INDEXES, DATASOURCES, INDEXERS]
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:],"hk:u:c:d:a:b:p",["help","key=","url=","savedconfig=", "datasourceconfig=","apiversion=","behavior=","purge"])
+        opts, _ = getopt.getopt(sys.argv[1:], "hk:u:c:d:a:b:p", ["help", "key=", "url=", "savedconfig=", "datasourceconfig=", "apiversion=", "behavior=", "purge"])
 
     except getopt.GetoptError:
         usage()
@@ -137,7 +136,7 @@ if __name__ == "__main__":
     dsconfigfile.close()
 
     if purge:
-        confirm = raw_input("WARNING: About to delete all the configs for the Azure Search instance. ... Enter Ctrl+C to abort!")
+        _ = raw_input("WARNING: About to delete all the configs for the Azure Search instance. ... Enter Ctrl+C to abort!")
         for configtype in ALL_CONFIG_TYPES:
             for existingconfig in existingconfigByType[configtype]:
                 resource = "%s/%s" % (configtype, existingconfig['name'])
@@ -159,18 +158,18 @@ if __name__ == "__main__":
         print "Provisioning %s" % configtype
         existingconfignames = [exconfig['name'] for exconfig in existingconfigByType[configtype]]
         for config in savedconfig[configtype]:
-            configname = config['name'];
+            configname = config['name']
             resource = "%s/%s" % (configtype, configname)
 
             if configname in existingconfignames:
                 if behavior == 'skip':
                     print "%s already exists, skipping." % resource
-                    continue;
+                    continue
                 elif behavior == 'update':
                     sys.stdout.write("UPDATING %s ... " % resource)
                     put_search_resource(url, key, apiversion, resource, config)
                     print "OK"
-                    continue;
+                    continue
                 elif behavior == 'delete':
                     sys.stdout.write("DELETING %s ... " % resource)
                     delete_search_resource(url, key, apiversion, resource)
@@ -181,3 +180,6 @@ if __name__ == "__main__":
         print "\n\n"
 
     sys.exit()
+
+if __name__ == "__main__":
+    main()

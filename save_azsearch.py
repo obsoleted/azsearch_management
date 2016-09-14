@@ -77,7 +77,7 @@ if __name__ == "__main__":
     for configtype in ['indexes', 'indexers', 'datasources']:
         response = requests.get(url + '/' + configtype, params=payload, headers=headers)
         response.raise_for_status()
-        search_configuration[configtype] = response.json()['value'];
+        search_configuration[configtype] = response.json()['value']
         response.close()
 
     configurationjson = json.dumps(search_configuration, indent=2)
