@@ -19,7 +19,7 @@ For a more detailed explanation of Azure Search please see the current documenta
 1. Configure the resource by [creating indexes](https://azure.microsoft.com/en-us/documentation/articles/search-what-is-an-index/) and [adding data](https://azure.microsoft.com/en-us/documentation/articles/search-what-is-data-import/)
    - *Note:* These scripts only save/provision configuration related to data pulling (i.e. data sources and indexes)
 1. Note an admin key and the url of the search resource
-1. Run the `save_azsearch.py` script supplying the key and url. Optionally specify an output file or the configuration will be printed to the console
+1. Run the [save_azsearch.py](./save_azsearch.py) script supplying the key and url. Optionally specify an output file or the configuration will be printed to the console
    ```sh
    python search_azsearch.py -k F6D1EEEEAC2A4D00DB1A5DB8C2DF09BC -u https://azsearchmanagement.search.windows.net -o azsearchmgmnt.json
    ```
@@ -51,8 +51,9 @@ The data source configuration file is expected to be a json file containing an a
 ## Applying Configuration
 
 **Requirements:** The saved resource and data source configuration files created in the above process.
+
 1. Get the admin key and url for the Azure Search instance you want to configure
-1. Run the `provision_azsearch.py` script supplying the key, url, resource configuration file, the data source configuration file and the behavior mode you want for the script.
+1. Run the [provision_azsearch.py](./provision_azsearch.py) script supplying the key, url, resource configuration file, the data source configuration file and the behavior mode you want for the script.
   - The behavior mode applies to how the script deals with indexes, data sources and indexers that already exist in the search instance.
     | Mode | Description |
     | ---- | ----------- |
