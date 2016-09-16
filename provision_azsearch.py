@@ -136,7 +136,11 @@ def main():
     dsconfigfile.close()
 
     if purge:
-        _ = raw_input("WARNING: About to delete all the configs for the Azure Search instance. ... Enter Ctrl+C to abort!")
+        try:
+            _ = raw_input("WARNING: About to delete all the configs for the Azure Search instance. ... Enter Ctrl+C to abort!")
+        except KeyboardInterrupt:
+            sys.exit()
+
         for configtype in ALL_CONFIG_TYPES:
             for existingconfig in existingconfigByType[configtype]:
                 resource = "%s/%s" % (configtype, existingconfig['name'])
