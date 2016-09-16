@@ -24,7 +24,7 @@ For a more detailed explanation of Azure Search please see the current documenta
 1. Note an admin key and the url of the search resource
 1. Run the [save_azsearch.py](./save_azsearch.py) script supplying the key and url. Optionally specify an output file or the configuration will be printed to the console
    ```sh
-   python search_azsearch.py -k F6D1EEEEAC2A4D00DB1A5DB8C2DF09BC -u https://azsearchmanagement.search.windows.net -o azsearchmgmnt.json
+   python save_azsearch.py -k F6D1EEEEAC2A4D00DB1A5DB8C2DF09BC -u https://azsearchmanagement.search.windows.net -o azsearchmgmnt.json
    ```
 
    - The output of a successful run of this script will be the json configuration of the search resource. It will contain the indexes, data sources and indexers currently configured. But it will **not** contain the connectionstring/secrets associated with the data sources.
