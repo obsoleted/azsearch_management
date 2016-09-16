@@ -1,0 +1,12 @@
+[
+    {
+        "type": "azuresql",
+        "sources": ["datasource1"],
+        "connectionString": "Server=tcp:{AZURE_SQL_DB_SERVER_NAME}.database.windows.net,1433;Initial Catalog={AZURE_SQL_DB_NAME};Persist Security Info=False;User ID={SQL_USERNAME};Password={SQL_USER_PASSWORD};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+    },
+    {
+        "type": "documentdb",
+        "sources": ["datasource2"],
+        "connectionString": "AccountEndpoint=https://{AZURE_DOCDB_NAME}.documents.azure.com:443/;AccountKey={AZURE_DOCDB_ACCESS_KEY};Database={AZURE_DOCDB_DB_NAME};"
+    }
+]

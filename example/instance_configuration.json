@@ -1,0 +1,304 @@
+{
+  "indexers": [
+    {
+      "dataSourceName": "datasource1",
+      "name": "indexer1",
+      "parameters": {
+        "maxFailedItems": 1,
+        "maxFailedItemsPerBatch": 0,
+        "base64EncodeKeys": true
+      },
+      "schedule": null,
+      "targetIndexName": "index1",
+      "description": "Indexer 1\nSchedule - Once\nBase64 Encode - Yes\nMax failed items - 1\nMax failed items per batch - 0"
+    },
+    {
+      "dataSourceName": "datasource2",
+      "name": "indexer2",
+      "parameters": {
+        "maxFailedItems": 0,
+        "maxFailedItemsPerBatch": 1,
+        "base64EncodeKeys": false
+      },
+      "schedule": {
+        "interval": "P1D",
+        "startTime": "0001-01-01T00:00:00Z"
+      },
+      "targetIndexName": "index2",
+      "description": "Indexer 2\nConnects datasource 2 to index 2\nDaily schedule\nBase64 Keys - No\nMax failed items - 0\nMax failed items per batch - 1"
+    }
+  ],
+  "datasources": [
+    {
+      "container": {
+        "query": null,
+        "name": "TableName1"
+      },
+      "name": "datasource1",
+      "dataDeletionDetectionPolicy": null,
+      "subtype": null,
+      "dataChangeDetectionPolicy": {
+        "@odata.type": "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy",
+        "highWaterMarkColumnName": "lastmodified"
+      },
+      "credentials": {
+        "connectionString": null
+      },
+      "type": "azuresql",
+      "description": "Azure SQL Data source targeting TableName1"
+    },
+    {
+      "container": {
+        "query": "SELECT *\nFROM Things t\nWHERE ARRAY_LENGTH(t.Tags) > 5 AND t._ts > @HighWaterMark\nORDER BY t._ts",
+        "name": "collection_1"
+      },
+      "name": "datasource2",
+      "dataDeletionDetectionPolicy": null,
+      "subtype": null,
+      "dataChangeDetectionPolicy": {
+        "@odata.type": "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy",
+        "highWaterMarkColumnName": "_ts"
+      },
+      "credentials": {
+        "connectionString": null
+      },
+      "type": "documentdb",
+      "description": "Data Source 2\ndocument db type\ndb: db_1\ncollection: collection_1\nQuery: Should select things with > 5 tags ordered by lastmodified date"
+    }
+  ],
+  "indexes": [
+    {
+      "corsOptions": {
+        "maxAgeInSeconds": 300,
+        "allowedOrigins": [
+          "*"
+        ]
+      },
+      "scoringProfiles": [
+        {
+          "text": {
+            "weights": {
+              "OtherText": 2.0,
+              "Name": 3.0
+            }
+          },
+          "functions": [],
+          "name": "scoreingprofile1",
+          "functionAggregation": "sum"
+        }
+      ],
+      "suggesters": [],
+      "name": "index1",
+      "fields": [
+        {
+          "facetable": false,
+          "sortable": false,
+          "name": "ID",
+          "searchable": false,
+          "filterable": true,
+          "analyzer": null,
+          "retrievable": true,
+          "key": true,
+          "type": "Edm.String"
+        },
+        {
+          "facetable": false,
+          "sortable": true,
+          "name": "Number",
+          "searchable": false,
+          "filterable": true,
+          "analyzer": null,
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.Int32"
+        },
+        {
+          "facetable": false,
+          "sortable": false,
+          "name": "Guid",
+          "searchable": true,
+          "filterable": true,
+          "analyzer": "standard.lucene",
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.String"
+        },
+        {
+          "facetable": false,
+          "sortable": true,
+          "name": "Name",
+          "searchable": true,
+          "filterable": true,
+          "analyzer": "standard.lucene",
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.String"
+        },
+        {
+          "facetable": false,
+          "sortable": false,
+          "name": "OtherText",
+          "searchable": true,
+          "filterable": false,
+          "analyzer": "standard.lucene",
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.String"
+        },
+        {
+          "facetable": false,
+          "sortable": true,
+          "name": "Geography",
+          "searchable": false,
+          "filterable": true,
+          "analyzer": null,
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.GeographyPoint"
+        },
+        {
+          "facetable": false,
+          "sortable": false,
+          "name": "GeographyText",
+          "searchable": false,
+          "filterable": false,
+          "analyzer": null,
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.String"
+        },
+        {
+          "facetable": false,
+          "sortable": true,
+          "name": "lastmodified",
+          "searchable": false,
+          "filterable": false,
+          "analyzer": null,
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.DateTimeOffset"
+        }
+      ],
+      "defaultScoringProfile": ""
+    },
+    {
+      "corsOptions": null,
+      "scoringProfiles": [],
+      "suggesters": [],
+      "name": "index2",
+      "fields": [
+        {
+          "facetable": false,
+          "sortable": false,
+          "name": "id",
+          "searchable": false,
+          "filterable": true,
+          "analyzer": null,
+          "retrievable": true,
+          "key": true,
+          "type": "Edm.String"
+        },
+        {
+          "facetable": false,
+          "sortable": false,
+          "name": "Name",
+          "searchable": false,
+          "filterable": false,
+          "analyzer": null,
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.String"
+        },
+        {
+          "facetable": false,
+          "sortable": true,
+          "name": "Integer",
+          "searchable": false,
+          "filterable": true,
+          "analyzer": null,
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.Int64"
+        },
+        {
+          "facetable": false,
+          "sortable": false,
+          "name": "IsEnabled",
+          "searchable": false,
+          "filterable": true,
+          "analyzer": null,
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.Boolean"
+        },
+        {
+          "facetable": false,
+          "sortable": true,
+          "name": "Double",
+          "searchable": false,
+          "filterable": false,
+          "analyzer": null,
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.Double"
+        },
+        {
+          "facetable": false,
+          "sortable": true,
+          "name": "Geolocation",
+          "searchable": false,
+          "filterable": false,
+          "analyzer": null,
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.GeographyPoint"
+        },
+        {
+          "facetable": false,
+          "sortable": false,
+          "name": "Description",
+          "searchable": true,
+          "filterable": false,
+          "analyzer": "standard.lucene",
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.String"
+        },
+        {
+          "facetable": true,
+          "sortable": false,
+          "name": "Tags",
+          "searchable": true,
+          "filterable": false,
+          "analyzer": "standard.lucene",
+          "retrievable": true,
+          "key": false,
+          "type": "Collection(Edm.String)"
+        },
+        {
+          "facetable": false,
+          "sortable": true,
+          "name": "LastModified",
+          "searchable": false,
+          "filterable": false,
+          "analyzer": null,
+          "retrievable": true,
+          "key": false,
+          "type": "Edm.DateTimeOffset"
+        },
+        {
+          "facetable": false,
+          "sortable": false,
+          "name": "rid",
+          "searchable": false,
+          "filterable": false,
+          "analyzer": null,
+          "retrievable": false,
+          "key": false,
+          "type": "Edm.String"
+        }
+      ],
+      "defaultScoringProfile": ""
+    }
+  ]
+}
