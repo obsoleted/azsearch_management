@@ -60,6 +60,7 @@ The data source configuration file is expected to be a json file containing an a
     | *update* | the script will attempt to *update* the configuration item (may cause failures depending on type of update and item type) |
     | *delete* | the script will first delete the item then create a new one matching the specified configuration |
   - example:
+ 
   ```sh
   python provision_azsearch.py -k F6D1EEEEAC2A4D00DB1A5DB8C2DF09BC - https://azsearchmanagement.search.windows.net -c azsearchmgmnt.json -d azsearchmgmnt_datasources.json -b skip
   ```
