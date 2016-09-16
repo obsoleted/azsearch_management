@@ -1,5 +1,8 @@
 # Azure Search Management Tools
-Scripts to assist with the management of Azure Search deployments with an eye towards DevOps flows. But could be useful even for something such as assisting with the "upgrading" or "downgrading" an Azure Search instance (i.e. Saving from one pricing tier instance and provisioning the same configuration to another).
+Scripts to assist with the management of Azure Search service configuration.
+Potential uses:
+- Providing the basis for source controlled search service configuration
+- Assisting with the migration to a new Azure Search pricing tier
 
 The scripts are written assuming an Azure Search resource has already been created. Automation of Azure Search resource creation is not handled here. But can be done in various ways, [ARM](https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/) template deployment for example.
 
@@ -56,7 +59,7 @@ The data source configuration file is expected to be a json file containing an a
 1. Run the [provision_azsearch.py](./provision_azsearch.py) script supplying the key, url, resource configuration file, the data source configuration file and the behavior mode you want for the script.
 
   - The behavior mode applies to how the script deals with indexes, data sources, and indexers that already exist in the search instance.
-  
+
     | Mode | Description |
     | ---- | ----------- |
     | *skip*  | the script will *skip* applying any configuration to it. |
@@ -64,7 +67,7 @@ The data source configuration file is expected to be a json file containing an a
     | *delete* | the script will first delete the item then create a new one matching the specified configuration |
 
   - example:
- 
+
   ```sh
   python provision_azsearch.py -k F6D1EEEEAC2A4D00DB1A5DB8C2DF09BC - https://azsearchmanagement.search.windows.net -c azsearchmgmnt.json -d azsearchmgmnt_datasources.json -b skip
   ```
