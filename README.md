@@ -54,12 +54,15 @@ The data source configuration file is expected to be a json file containing an a
 
 1. Get the admin key and url for the Azure Search instance you want to configure
 1. Run the [provision_azsearch.py](./provision_azsearch.py) script supplying the key, url, resource configuration file, the data source configuration file and the behavior mode you want for the script.
-  - The behavior mode applies to how the script deals with indexes, data sources and indexers that already exist in the search instance.
+
+  - The behavior mode applies to how the script deals with indexes, data sources, and indexers that already exist in the search instance.
+  
     | Mode | Description |
     | ---- | ----------- |
     | *skip*  | the script will *skip* applying any configuration to it. |
     | *update* | the script will attempt to *update* the configuration item (may cause failures depending on type of update and item type) |
     | *delete* | the script will first delete the item then create a new one matching the specified configuration |
+
   - example:
  
   ```sh
